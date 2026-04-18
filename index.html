@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Codon Translator</title>
+<style>
+body{
+    font-family: Arial;
+    text-align: center;
+    margin: 40px;
+    background:#f4f6f8;
+}
+
+h1{
+    color:#333;
+}
+
+textarea{
+    width:80%;
+    height:120px;
+    font-size:16px;
+    padding:10px;
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#result{
+    margin-top:20px;
+    font-size:18px;
+    background:white;
+    padding:15px;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>DNA Codon Translator</h1>
+
+<p>Paste DNA sequence (A T C G)</p >
+
+<textarea id="dnaInput" placeholder="Example: ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"></textarea>
+
+<br>
+
+<button onclick="translateDNA()">Translate</button>
+
+<div id="result"></div>
+
+<script>
+
+const codonTable = {
+"TTT":"F","TTC":"F","TTA":"L","TTG":"L",
+"TCT":"S","TCC":"S","TCA":"S","TCG":"S",
+"TAT":"Y","TAC":"Y","TAA":"Stop","TAG":"Stop",
+"TGT":"C","TGC":"C","TGA":"Stop","TGG":"W",
+
+"CTT":"L","CTC":"L","CTA":"L","CTG":"L",
+"CCT":"P","CCC":"P","CCA":"P","CCG":"P",
+"CAT":"H","CAC":"H","CAA":"Q","CAG":"Q",
+"CGT":"R","CGC":"R","CGA":"R","CGG":"R",
+
+"ATT":"I","ATC":"I","ATA":"I","ATG":"M",
+"ACT":"T","ACC":"T","ACA":"T","ACG":"T",
+"AAT":"N","AAC":"N","AAA":"K","AAG":"K",
+"AGT":"S","AGC":"S","AGA":"R","AGG":"R",
+
+"GTT":"V","GTC":"V","GTA":"V","GTG":"V",
+"GCT":"A","GCC":"A","GCA":"A","GCG":"A",
+"GAT":"D","GAC":"D","GAA":"E","GAG":"E",
+"GGT":"G","GGC":"G","GGA":"G","GGG":"G"
+};
+
+function translateDNA(){
+
+let dna = document.getElementById("dnaInput").value
+.toUpperCase()
+.replace(/[^ATCG]/g,"");
+
+let protein = "";
+
+for(let i=0;i<dna.length;i+=3){
+
+let codon = dna.substring(i,i+3);
+
+if(codon.length<3) break;
+
+let aa = codonTable[codon] || "?";
+
+protein += aa + " ";
+}
+
+document.getElementById("result").innerHTML =
+"<b>Amino Acid Sequence:</b><br>" + protein;
+
+}
+
+</script>
+
+</body>
+</html>
